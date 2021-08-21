@@ -1,0 +1,93 @@
+LeetCode:
+Ques Link : https://leetcode.com/problems/longest-substring-of-all-vowels-in-order/
+
+
+Solution:
+
+class Solution {
+public:
+    int longestBeautifulSubstring(string word) {
+        stack<int> s;
+	map<char,int> m;
+	m['a']=0;
+	m['e']=1;
+	m['i']=2;
+	m['o']=3;
+        int maxx=0;
+	m['u']=4;
+	for (int i = 0; i < word.size(); ++i)
+	{
+		if(s.size()==0)
+		{
+			if(word[i]=='a')
+			s.push(m[word[i]]);
+		else
+			continue;
+		}
+		else
+		{
+			
+			if(m[word[i]]-s.top()==1||m[word[i]]-s.top()==0)
+			{
+			s.push(m[word[i]]);
+			}
+			else
+			{
+				vector<int> v;
+			std::vector<int> vx{4,3,2,1,0};
+			int c=s.size();
+				while(s.size()!=0)
+				{
+					if(v.size()==0)
+					{
+						v.push_back(s.top());
+					}
+					else
+					{
+						if(v.back()!=s.top())
+							{v.push_back(s.top());}
+					}
+					// cout<<s.top()<<endl;
+					s.pop();
+				}
+				// for(auto i : v)cout<<i<<" ";
+					// cout<<endl;
+				if(vx==v)
+                {
+                    if(c>maxx)
+                        maxx=c;
+                }
+                // else
+                    i--;
+			}
+		}
+	}
+
+		vector<int> v;
+			std::vector<int> vx{4,3,2,1,0};
+			int c=s.size();
+				while(s.size()!=0)
+				{
+					if(v.size()==0)
+					{
+						v.push_back(s.top());
+					}
+					else
+					{
+						if(v.back()!=s.top())
+							{v.push_back(s.top());}
+					}
+					// cout<<s.top()<<endl;
+					s.pop();
+				}
+				// for(auto i : v)cout<<i<<" ";
+				// 	cout<<endl;
+				if(vx==v)
+                {
+                    if(c>maxx)
+                        return c;
+                }
+        return maxx;
+
+    }
+};

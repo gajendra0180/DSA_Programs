@@ -26,6 +26,7 @@ public:
 		}
 		else
 		{
+			//Compared previous and current letter for difference validity(like if previous is a and current is e then difference must be 1)
 			
 			if(m[word[i]]-s.top()==1||m[word[i]]-s.top()==0)
 			{
@@ -63,7 +64,28 @@ public:
 		}
 	}
 
-		vector<int> v;
+			vector<int> v;
+			/*Created a vx vector which will act like a correct answer while popping the stack
+			Like if we have a stack as 
+					4
+					4
+					4
+					4
+					4
+					4
+					3
+					3
+					3
+					2
+					2
+					1
+					0
+					0
+			Then we will be storing it in a vector with a single occurence of each of the item....
+			so our vector v will be : 4 3 2 1 0
+			Note that we cannot use a set here because that will disturb our ordering.
+			*/
+			
 			std::vector<int> vx{4,3,2,1,0};
 			int c=s.size();
 				while(s.size()!=0)
@@ -77,11 +99,8 @@ public:
 						if(v.back()!=s.top())
 							{v.push_back(s.top());}
 					}
-					// cout<<s.top()<<endl;
 					s.pop();
 				}
-				// for(auto i : v)cout<<i<<" ";
-				// 	cout<<endl;
 				if(vx==v)
                 {
                     if(c>maxx)

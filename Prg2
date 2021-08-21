@@ -1,0 +1,106 @@
+LeetCode:
+Queslink: https://leetcode.com/problems/longest-substring-of-all-vowels-in-order/
+
+
+Solution:
+
+class Solution {
+public:
+    vector<int> res;
+    
+     vector<vector<int>> v;
+     vector<vector<int>> vx;
+    int s=0;    
+    int CP(vector<int> v1,vector<int> v2)
+    {
+        
+        int p=0;
+        for(int i=0;i<v1.size();i++)
+        {
+            if(v1[i]==v2[i])
+                p++;
+        }
+        return p;
+    }
+    
+    bool isSafe(int r,int c)
+    {
+        int i=r;
+       while(i>=0)
+        {
+            if(v[i][c]==100)
+                return false;
+           i--;
+        }
+        // s=s+v[r][c];
+        // cout<<s<<" ";
+        return true;
+    }
+    
+    int maxx=INT_MIN;
+    
+    void qu(int r)
+    {
+        
+    if(r==v.size())
+    {
+        
+        for(int i=0;i<v.size();i++)
+        {
+            for(int j=0;j<v[0].size();j++)
+            {
+                if(v[i][j]==100)
+                s=s+vx[i][j];
+            }
+        }
+        // cout<<s<<endl;
+        if(s>maxx)
+            maxx=s;
+        s=0;
+        return;
+    }
+        
+     for(int col=0;col<v[r].size();col++)
+        {
+         // int s=0;
+          // cout<<r<<" "<<col<<endl;
+            if(isSafe(r,col))
+            {
+            
+                int temp=v[r][col];
+                v[r][col]=100;
+                // s=s+v[r][col];
+                qu(r+1);
+                 v[r][col]=temp;
+                // s=s-v[r][col];
+            }
+
+        }
+       
+    
+    
+    }
+    
+    
+    
+    
+    
+    int maxCompatibilitySum(vector<vector<int>>& students, vector<vector<int>>& mentors) {
+       
+        for(int i=0;i<students.size();i++)
+        {
+            vector<int> temp;
+            for(int j=0;j<mentors.size();j++)
+            {
+                temp.push_back(CP(students[i],mentors[j]));
+            }
+                         v.push_back(temp);                       
+        }
+        
+        
+        vx=v;
+        qu(0);
+        return maxx;
+        
+    }
+};

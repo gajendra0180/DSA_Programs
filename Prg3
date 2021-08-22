@@ -1,0 +1,28 @@
+LeetCode:
+
+Ques Link:  https://leetcode.com/problems/minimize-the-difference-between-target-and-chosen-elements/
+
+
+Solution:
+
+
+class Solution:
+    def minimizeTheDifference(self, mat: List[List[int]], target: int) -> int:
+        nums={0}
+        for row in mat:
+        
+        /*List Comprehension substitute for  nums={ele_row+old_sum for ele_row in row for old_sum in nums}   but it increases runtime 
+        
+          num={0}
+          for ele_row in row:
+            num.discard(0)
+            for old_sum in nums:
+              num.append(ele_row+old_sum)
+           nums=num
+           
+        */        
+            nums={ele_row+old_sum for ele_row in row for old_sum in nums}
+            
+            
+       anss=min(abs(ans-target) for ans in nums)
+          return anss

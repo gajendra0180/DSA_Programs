@@ -1,0 +1,57 @@
+https://leetcode.com/problems/house-robber/
+
+class Solution {
+public:
+    vector<int> v;
+    map<int,int> m;
+    int maxSum(int n)
+    {
+        if(n<1)
+            return 0;
+        
+        if(m.find(n)!=m.end())
+            return m[n];
+        
+        return m[n] =  max(v[n-1]+maxSum(n-2),maxSum(n-1));
+        
+    }
+    
+    int rob(vector<int>& nums) {
+        v=nums;
+        return maxSum(nums.size());
+    }
+};
+
+
+
+Now the Good part comes......See the question below:
+https://leetcode.com/problems/delete-and-earn/
+
+DO you find any realtion between both??Yeah You are correct!
+
+They are basically the same :) 
+
+class Solution {
+public:
+       vector<int> v;
+    map<int,int> m;
+    int maxSum(int n)
+    {
+        if(n<1)
+            return 0;
+        if(m.find(n)!=m.end())
+            return m[n];
+        return m[n] =  max(v[n-1]+maxSum(n-2),maxSum(n-1));
+    }
+    int deleteAndEarn(vector<int>& nums) {
+     map<int,int> m1;
+        for(auto i:nums)
+            m1[i]++;
+        vector<int> temp;
+        for(auto i:m1)
+           temp.push_back(i.second*i.first);
+        v=temp;
+    return maxSum(temp.size());        
+        
+    }
+};

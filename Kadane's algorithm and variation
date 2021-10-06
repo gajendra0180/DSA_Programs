@@ -1,0 +1,76 @@
+Note maximum subarray sum : kadane's algo On vector
+Note minimum subarray sum : kadane's algo on vector with sign of elements inverted
+
+
+
+
+Problem link: https://leetcode.com/problems/maximum-subarray/
+
+class Solution {
+public:
+    int maxSubArray(vector<int>& v) {
+        
+        int curr_max=v[0],overall_best=v[0];
+        for(int i=1;i<v.size();i++)
+        {
+               if(v[i]+curr_max>v[i])
+                    curr_max=curr_max+v[i];
+            else
+                    curr_max=v[i];
+            
+            if(curr_max>overall_best)
+                overall_best=curr_max;
+        }
+        return overall_best;
+    }
+};
+
+
+
+Now the variation:
+Problem Link:
+
+https://leetcode.com/problems/maximum-sum-circular-subarray/
+
+class Solution {
+public:
+        int maxSubArray(vector<int> v) {
+        int curr_max=v[0],overall_best=v[0];
+        for(int i=1;i<v.size();i++)
+        {
+               if(v[i]+curr_max>v[i])
+                    curr_max=curr_max+v[i];
+            else
+                    curr_max=v[i];
+            
+            if(curr_max>overall_best)
+                overall_best=curr_max;
+        }
+        return overall_best;
+    }
+    
+    int maxSubarraySumCircular(vector<int>& nums) {
+        //non circular max subarray sum
+        int max_sum_subarray=maxSubArray(nums);
+        
+        //circular subarray sum trick : 
+        // Note maximum subarray sum : kadane's algo On vector
+        // Note minimum subarray sum : kadane's algo on vector with sign of elements inverted
+        //FOr circular max_subarray_sum = max(total sum-minimum_subarray_sum,nonCircular_max_subarray_sum)      
+        int total_sum=0;
+        for(int i=0;i<nums.size();i++)
+        {
+            total_sum+=nums[i];
+            nums[i]=-nums[i];
+        }
+        int min_sum_subarray=maxSubArray(nums);
+        cout<<min_sum_subarray<<endl;
+        if(total_sum+min_sum_subarray!=0)
+        return max(total_sum+min_sum_subarray,max_sum_subarray);
+        else
+            return max_sum_subarray;
+    }
+};
+
+
+

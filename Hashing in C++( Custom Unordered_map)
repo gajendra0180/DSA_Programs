@@ -1,0 +1,47 @@
+Problem Link: 
+https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iii/submissions/
+
+
+#pragma GCC optimize ("O3")
+#pragma GCC target ("sse4")
+
+#pragma GCC optimize("Ofast")
+static auto _ = [] () {ios_base::sync_with_stdio(false);cin.tie(nullptr);cout.tie(nullptr);return 0;}();
+
+#define sync ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
+
+class Solution { 
+public:
+
+struct HASH{
+	size_t operator()(const pair<int,pair<int,int>> &x)const{
+		return hash<int>()(x.first^(x.second.first)^(x.second.second));
+	}
+};
+
+  // Custom Unordered Map using hashing
+    unordered_map<pair<int,pair<int,int>>,int,HASH> m;
+    
+    int profit(vector<int> &v,int i,int k,int buy)
+    {
+        sync;
+        if(i>=v.size()||k<=0)
+            return 0;
+        
+        //Work finished
+        if(m.find({i,{buy,k}})!=m.end())
+            return m[{i,{buy,k}}];
+        
+        if(buy)//buying
+        {
+            return m[{i,{buy,k}}]=max(-v[i]+profit(v,i+1,k,0),profit(v,i+1,k,1));
+        }
+        else
+        {
+            return m[{i,{buy,k}}]=max(v[i]+profit(v,i+1,k-1,1),profit(v,i+1,k,0));
+        }
+    }
+    int maxProfit(vector<int>& prices) {
+        return profit(prices,0,2,1);
+    }
+};

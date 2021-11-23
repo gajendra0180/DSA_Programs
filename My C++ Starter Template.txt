@@ -52,17 +52,11 @@
 // ████████████▓▓████████████████████                      ░░▓▓▓▓██████████████████████████████████████████▓▓    ░░░░▒▒▒▒▒▒▒▒▒▒▒▒░░░░░░                                        ██████████████████████
 // ▓▓██████████████████████████▓▓████                        ▓▓▓▓▓▓████████████████████████████████████████░░░░▒▒▒▒▓▓░░  ░░░░    ░░  ░░
 
-// #include<bits/stdc++.h>
 #include "bits/stdc++.h"
 using namespace std;
-#pragma GCC optimize("O3")
 #pragma GCC target("avx2")
 #pragma GCC optimization("O3")
 #pragma GCC optimization("unroll-loops")
-#pragma GCC optimize("Ofast")
-#pragma GCC target("avx,avx2,fma")
-#pragma GCC target("sse4")
-#pragma GCC optimize("Ofast")
 static auto _ = []()
 {
 	ios_base::sync_with_stdio(false);
@@ -75,37 +69,7 @@ static auto _ = []()
 
 typedef std::vector<int> vi;
 
-// Pre Built Functions
-
-//  1) Prime Sieve
-bool prime_seive[1000010];
-void prime_seive_func()
-{
-	bool flag;
-
-	for (int i = 0; i <= 1000002; i++)
-		prime_seive[i] = true;
-
-	for (int i = 2; i <= 1000002; i++)
-	{
-		for (int j = i * i; j <= 1000002; j += i)
-		{
-			prime_seive[j - 1] = false;
-		}
-	}
-
-	prime_seive[0] = 0;
-
-	/* How to use this sieve function
-	First call prime_seive_func();
-	Then next call cout<<prime_seive[n-1];
-	=>This is for checking prime property of n.
-	eg.For checking prime
-	Property Of 29 do cout<<prime_seive[28];
-*/
-}
-
-//  2) modular-exponentiation-power-in-modular-arithmetic
+//  1) modular-exponentiation-power-in-modular-arithmetic
 int mod_power(int a, int b, int mod)
 {
 	if (b == 0)
@@ -122,56 +86,13 @@ int mod_power(int a, int b, int mod)
 	return ans % mod;
 }
 
-// 3)  Custom Unordered map
-// https://codeforces.com/blog/entry/21853
-
-// A) unordered_map<vector<int>,int> um;
-
-// struct HASH{
-// 	size_t operator()(const vector<int> &x)const{
-// 		return hash<long long>()(((long long)x[0])^(((long long)x[1])<<32)^(((long long)x[2])<<32));
-// 	}
-// };
-
-// B) unordered_map<pair<int,pair<int,int>>,int,HASH> um;
-
-// struct HASH{
-// 	size_t operator()(const pair<int,pair<int,int>> &x)const{
-// 		return hash<int>()(x.first)^(x.second.first)^(x.second.second));
-// 	}
-// };
-
-// C) unordered_map<pair<int,int>,int,HASH> um;
-
-// struct HASH{
-// 	size_t operator()(const pair<int,int> &x)const{
-// 		return hash<int>()((x.first)^(x.second));
-// 	}
-// };
-
-// Usage :  unordered_map<int, int, custom_hash> safe_map;
-
-// 4) Binary String to integer
-
-int bin_to_int(string s)
-{
-	int res = 0, power = (s.length()) - 1;
-	for (int i = 0; i < s.length(); i++)
-	{
-		if (s[i] - 48 != 0)
-			res += pow(2, power);
-		power--;
-	}
-	return res;
-}
-
-// 5 Global Mod
+// 2 Global Mod
 int global_mod(int x, int y)
 {
 	return (((x % y) + y) % y);
 }
 
-// 6  Exponentiation by squaring.Now you do not need to worry about preision or imperfect comparison between
+// 3  Exponentiation by squaring.Now you do not need to worry about preision or imperfect comparison between
 //  integers or long and double which we used to have with the normal pow function of C++
 
 int ipow(int base, int exp)
@@ -190,43 +111,10 @@ int ipow(int base, int exp)
 	return result;
 }
 
-// 7) For Graphs
-
-// const int N = 1e6+3;
-
-// a) vector<int> g[N];  ->edges without weights
-// b) vector<pair<int,int>> g[N];  ->edges with weights
-
-// bool vis[N];
-
-// void dfs(int u)
-// {
-// 	vis[u]=1;
-// 	for(auto v: g[u])
-// 	{
-// 		if(vis[v])
-// 			continue;
-// 		dfs(v);
-// 	}
-// }
-
-// void make_graph()
-// {
-// 	int n,m,u,v;
-// 	// n is number nodes and m are number of edges
-// 	cin>>n>>m;
-// 	while(m--)
-// 	{
-// 		cin>>u>>v;
-// 		g[u].push_back(v);
-// 		g[v].push_back(u);
-// 	}
-
-// }
-
 // #define
 #define sync ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
 #define each(i, a) for (auto i : a)
+#define repeat(i, start, end) for (int i = start; i < end; i++)
 #define fdv(x)       \
 	for (auto i : x) \
 		cout << i << " ";
@@ -237,7 +125,6 @@ int ipow(int base, int exp)
 #define len(s) s.size()
 #define sort(v) sort(v.begin(), v.end())
 #define reverse(v) reverse(v.begin(), v.end())
-// #define find(v,x)  find(v.begin(),v.end(),x)
 #define l_b(v, x) lower_bound(v.begin(), v.end(), x)
 #define u_b(v, x) upper_bound(v.begin(), v.end(), x)
 #define b_s(v, x) binary_search(v.begin(), v.end(), x)
@@ -325,6 +212,7 @@ void prn(const H &h, const T &...t)
 		cin >> a;               \
 		v.push_back(a);         \
 	}
+
 #define space cout << " "
 #define nl cout << endl
 #define elif else if
@@ -334,8 +222,14 @@ void prn(const H &h, const T &...t)
 #define gcd(a, b) __gcd(a, b)
 #define lcm(a, b) (a / (__gcd(a, b))) * b
 #define endl "\n"
-// cout<<fixed<<setprecision(6);
-
+#define done cout << "Line " << __LINE__ << " is done" << endl;
+#define dsc greater<int>()
+//
+//
+//
+//
+//
+//
 void solve()
 {
 }
@@ -343,19 +237,12 @@ void solve()
 main()
 {
 	sync
-
 #ifndef ONLINE_JUDGE
 		freopen("input.txt", "r", stdin);
 	freopen("output.txt", "w", stdout);
-	freopen("error.txt", "w", stderr);
 #endif
-
-	// int test;in(test);
-	// while(test--)
-	solve();
-	cerr << "Time : " << 1000 * ((double)clock()) / (double)CLOCKS_PER_SEC << "ms\n";
+	// int test;
+	// in(test);
+	// while (test--)
+	(solve());
 }
-
-// https://leetcode.com/playground/JR38V3Tj
-// https://csacademy.com/app/graph_editor/
-// http://patorjk.com/software/taag/#p=testall&v=2&f=Avatar&t=gajendra_0180
